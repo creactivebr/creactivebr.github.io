@@ -4,7 +4,7 @@ This is our blog. There are many like it, but this one is ours.
 
 It is automatically transformed by [Jekyll](http://http://github.com/mojombo/jekyll "Jekyll") into a static site whenever we push this repository to GitHub.
 
-The layout we're using it's called **Up**. You can [check out the repository here](https://github.com/caarlos0/up).
+The layout we're using is called **Up**. You can [check out the repository here](https://github.com/caarlos0/up).
 
 ## License
 
