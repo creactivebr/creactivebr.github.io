@@ -1,0 +1,35 @@
+timezone: America/Fortaleza
+host: 0.0.0.0
+port: 3000
+markdown: rdiscount
+pygments: true
+permalink: /posts/:title
+rdiscount:
+  extensions: [smart]
+title : Fala Creactive!
+production_url : http://blog.creactive.com.br
+description: "Blogga Please"
+disqus_shortname: creactivebr
+analytics: UA-42366964-1
+authors:
+  hermanocabral:
+    display_name: Hermano Cabral
+    gravatar: 456f6e60fb711aa6e9f0516bd0168c73
+    email: hermanocabral@creactive.com.br
+    web: http://creactive.com.br
+    twitter: hermanocabral
+    github: hermanocabral
+  brunosaboia:
+    display_name: Bruno Saboia
+    gravatar: 83adc3987bc8ceef404703258f70c616
+    email: brunosaboia@creactive.com.br
+    web: http://creactive.com.br
+    twitter: creactivebr
+    github: creactivebr
+  creactive:
+    display_name: Creactive Soluções Tecnológicas
+    gravatar: a0df0g005603
+    email: contato@creactive.com.br
+    web: http://creactive.com.br
+    twitter: creactivebr
+    github: creactivebr
