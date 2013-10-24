@@ -8,14 +8,15 @@ tags: [ Autocad, ObjectArx ]
 
 Olá a todos.
 
-Esse post visa tentar explicar um pouco sobre cada DLL do AutoCAD ObjectARX, que é nosso arcabouço de objetos que nos permite interagir com o programa (aliás, o ObjectARX é indispensável para o acompanhamento desse blog, se você ainda não fez, faça o download aqui: http://usa.autodesk.com/adsk/servlet/index?id=773204&siteID=123112).
+Esse post visa tentar explicar um pouco sobre cada DLL do AutoCAD ObjectARX, que é nosso arcabouço de objetos que nos permite interagir com o programa (aliás, o ObjectARX é indispensável para o acompanhamento desse blog, se você ainda não fez, faça o download [aqui](http://usa.autodesk.com/adsk/servlet/index?id=773204&siteID=123112)).
 
 Enfim, se olharmos os arquivos do ObjectARX (neste caso, estamos analisando especificamente a versão 2013 do Framework), na pasta \inc, temos alguns arquivos *Mgd.dll. Eles são:
 
-AcCoreMgd.dll (esta DLL só existe a partir da versão 2013)
-AcDbMdg.dll
-AcMgd.dll
-AcTcMgd.dll
+- AcCoreMgd.dll (esta DLL só existe a partir da versão 2013)
+- AcDbMdg.dll
+- AcMgd.dll
+- AcTcMgd.dll
+
 Se visualizarmos essas DLLs com o Object Browser, veremos o seguinte:
 
 ![Fig. 1: AcCoreMgd.dll]({{ site_url }}/images/dlls-do-autocad-objectarx.img1.png)
