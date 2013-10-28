@@ -63,12 +63,11 @@ var pontoD = new Point3d(100, 0, 0);
 
 Note que temos 4 pontos criados, mas eles não são suficientes. É necessários uni-los através de quatro retas: AB, AC, BD, CD. Para tal, criamos o objeto Line, que representa a reta, e passamos os pontos de início e fim como argumentos para o construtor:
 
-
 {% highlight csharp linenos=table %}
- var retaAB = new Line(pontoA, pontoB);
- var retaAC = new Line(pontoA, pontoC);
- var retaBD = new Line(pontoB, pontoD);
- var retaCD = new Line(pontoC, pontoD);
+var retaAB = new Line(pontoA, pontoB);
+var retaAC = new Line(pontoA, pontoC);
+var retaBD = new Line(pontoB, pontoD);
+var retaCD = new Line(pontoC, pontoD);
 {% endhighlight %}
 
 Note que, apesar de termos a geometria construída em memória, nós não a adicionamos efetivamente ao documento em momento algum. Para tal, precisamos criar uma Transaction, ou seja, uma transação junto ao banco de dados do AutoCAD, e assim inserir efetivamente os objetos nele.
