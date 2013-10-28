@@ -24,7 +24,7 @@ Você deverá ver esses arquivos. Crie um novo arquivo no padrão (NomeDoProjeto
 Após isso, edite o arquivo que você acabou de criar usando o notepad, o Visual Studio ou qualquer outro editor de texto que você prefira.
 Insira o seguinte conteúdo nele:
 
-{% highlight xml linenos %}
+{% highlight xml linenos=table %}
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">

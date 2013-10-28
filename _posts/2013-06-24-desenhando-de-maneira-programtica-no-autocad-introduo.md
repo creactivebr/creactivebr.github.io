@@ -35,11 +35,11 @@ Agora, vá até o local onde você descompactou o ObjectARX e selecione os arqui
 
 Como a nossa ideia é criar um comando para desenhar nosso quadrado, primeiro devemos criar o método que irá chamar o comando. Para isso, devemos usar o Attribute [CommandMethod], que indica que o método subsequente é um comando no AutoCAD. Primeiro, adicione o namespace Autodesk.AutoCAD.Runtime com o comando using. Depois, defina um método chamado DesenharQuadrado que não recebe argumentos e cuja assinatura é void. Depois, adicione o atributto [CommandMethod("DesenharQuadrado")] ao método recém-criado. Nosso código ficará assim:
 
-{% highlight csharp linenos %}
-        [CommandMethod("DesenharQuadrado")]
-        public void DesenharQuadrado()
-        {
-        }
+{% highlight csharp linenos=table %}
+[CommandMethod("DesenharQuadrado")]
+public void DesenharQuadrado()
+{
+}
 {% endhighlight %}
 
 
@@ -52,11 +52,11 @@ No nosso exemplo, diremos que a origem é o ponto C, ou seja, as coordenadas do 
 
 Ao código, então:
 
-{% highlight csharp linenos %}
-            var pontoA = new Point3d(0, 100, 0);
-            var pontoB = new Point3d(100, 100, 0);
-            var pontoC = new Point3d(0, 0, 0);
-            var pontoD = new Point3d(100, 0, 0);
+{% highlight csharp linenos=table %}
+var pontoA = new Point3d(0, 100, 0);
+var pontoB = new Point3d(100, 100, 0);
+var pontoC = new Point3d(0, 0, 0);
+var pontoD = new Point3d(100, 0, 0);
 {% endhighlight %}
 
 
@@ -64,11 +64,11 @@ Ao código, então:
 Note que temos 4 pontos criados, mas eles não são suficientes. É necessários uni-los através de quatro retas: AB, AC, BD, CD. Para tal, criamos o objeto Line, que representa a reta, e passamos os pontos de início e fim como argumentos para o construtor:
 
 
-{% highlight csharp linenos %}
-            var retaAB = new Line(pontoA, pontoB);
-            var retaAC = new Line(pontoA, pontoC);
-            var retaBD = new Line(pontoB, pontoD);
-            var retaCD = new Line(pontoC, pontoD);
+{% highlight csharp linenos=table %}
+ var retaAB = new Line(pontoA, pontoB);
+ var retaAC = new Line(pontoA, pontoC);
+ var retaBD = new Line(pontoB, pontoD);
+ var retaCD = new Line(pontoC, pontoD);
 {% endhighlight %}
 
 Note que, apesar de termos a geometria construída em memória, nós não a adicionamos efetivamente ao documento em momento algum. Para tal, precisamos criar uma Transaction, ou seja, uma transação junto ao banco de dados do AutoCAD, e assim inserir efetivamente os objetos nele.
@@ -81,95 +81,95 @@ Dentro deste bloco, iremos invocar o método GetObject do nosso objeto de transa
 
 Agora, nós iremos ler a tabela de blocos (BlockTable), que vai conter as retas criadas por nós. Após este passo, iremos ler o ModelSpace, e abri-lo para escrita, para que possamos inserir nossos objetos de fato:
 
-{% highlight csharp linenos %}
-            var document = Application.DocumentManager.MdiActiveDocument;
- 
-            using (var transaction = document.TransactionManager.StartTransaction())
-            {
-                var blockTable = transaction.GetObject(document.Database.BlockTableId, OpenMode.ForRead) as BlockTable;
-                var blockTableRecord = transaction.GetObject(blockTable[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;                
-            }
+{% highlight csharp linenos=table %}
+var document = Application.DocumentManager.MdiActiveDocument;
+
+using (var transaction = document.TransactionManager.StartTransaction())
+{
+     var blockTable = transaction.GetObject(document.Database.BlockTableId, OpenMode.ForRead) as BlockTable;
+     var blockTableRecord = transaction.GetObject(blockTable[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+}
 {% endhighlight %}
 
 Precisamos agora adicionar as quatro retas ao modelo. Iremos usar dois métodos para tal: AppendEntity(Entity) e AddNewlyCreatedDBObject(DBObject, bool), que pertencem, respectivamente, às classes BlockTableRecord e Transaction. Após adicionamos, nós executamos a transação com o método Commit():
 
 
-{% highlight csharp linenos %}
-                blockTableRecord.AppendEntity(retaAB);
-                transaction.AddNewlyCreatedDBObject(retaAB, true);
- 
-                blockTableRecord.AppendEntity(retaAC);
-                transaction.AddNewlyCreatedDBObject(retaAC, true);
- 
-                blockTableRecord.AppendEntity(retaBD);
-                transaction.AddNewlyCreatedDBObject(retaBD, true);
- 
-                blockTableRecord.AppendEntity(retaCD);
-                transaction.AddNewlyCreatedDBObject(retaCD, true);
- 
-                transaction.Commit();
+{% highlight csharp linenos=table %}
+blockTableRecord.AppendEntity(retaAB);
+transaction.AddNewlyCreatedDBObject(retaAB, true);
+
+blockTableRecord.AppendEntity(retaAC);
+transaction.AddNewlyCreatedDBObject(retaAC, true);
+
+blockTableRecord.AppendEntity(retaBD);
+transaction.AddNewlyCreatedDBObject(retaBD, true);
+
+blockTableRecord.AppendEntity(retaCD);
+transaction.AddNewlyCreatedDBObject(retaCD, true);
+
+transaction.Commit();
 {% endhighlight %}
 
 Pronto. Agora, apenas por motivos estéticos, iremos escrever no output do AutoCAD que nosso comando teve êxito na execução. Para isto, basta executar o método WriteMessage do campo Editor do nosso documento. Abaixo, o código completo do nosso gerador de quadrados: 
 
 
-{% highlight csharp linenos %}
-using Autodesk.AutoCAD.ApplicationServices;
-using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.Geometry;
-using Autodesk.AutoCAD.Runtime;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
- 
-namespace DesenharQuadrado
-{
-    public class AuxiliarAutoCAD
+{% highlight csharp %}
+    using Autodesk.AutoCAD.ApplicationServices;
+    using Autodesk.AutoCAD.DatabaseServices;
+    using Autodesk.AutoCAD.Geometry;
+    using Autodesk.AutoCAD.Runtime;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+     
+    namespace DesenharQuadrado
     {
-        [CommandMethod("DesenharQuadrado")]
-        public void DesenharQuadrado()
+        public class AuxiliarAutoCAD
         {
- 
-            var pontoA = new Point3d(0, 100, 0);
-            var pontoB = new Point3d(100, 100, 0);
-            var pontoC = new Point3d(0, 0, 0);
-            var pontoD = new Point3d(100, 0, 0);
- 
-            var retaAB = new Line(pontoA, pontoB);
-            var retaAC = new Line(pontoA, pontoC);
-            var retaBD = new Line(pontoB, pontoD);
-            var retaCD = new Line(pontoC, pontoD);
- 
-            var document = Application.DocumentManager.MdiActiveDocument;
- 
-            using (var transaction = document.TransactionManager.StartTransaction())
+            [CommandMethod("DesenharQuadrado")]
+            public void DesenharQuadrado()
             {
-                var blockTable = transaction.GetObject(document.Database.BlockTableId, OpenMode.ForRead) as BlockTable;
-                var blockTableRecord = transaction.GetObject(blockTable[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
- 
-                blockTableRecord.AppendEntity(retaAB);
-                transaction.AddNewlyCreatedDBObject(retaAB, true);
- 
-                blockTableRecord.AppendEntity(retaAC);
-                transaction.AddNewlyCreatedDBObject(retaAC, true);
- 
-                blockTableRecord.AppendEntity(retaBD);
-                transaction.AddNewlyCreatedDBObject(retaBD, true);
- 
-                blockTableRecord.AppendEntity(retaCD);
-                transaction.AddNewlyCreatedDBObject(retaCD, true);
- 
-                transaction.Commit();
- 
-                transaction.Commit();
+     
+                var pontoA = new Point3d(0, 100, 0);
+                var pontoB = new Point3d(100, 100, 0);
+                var pontoC = new Point3d(0, 0, 0);
+                var pontoD = new Point3d(100, 0, 0);
+     
+                var retaAB = new Line(pontoA, pontoB);
+                var retaAC = new Line(pontoA, pontoC);
+                var retaBD = new Line(pontoB, pontoD);
+                var retaCD = new Line(pontoC, pontoD);
+     
+                var document = Application.DocumentManager.MdiActiveDocument;
+     
+                using (var transaction = document.TransactionManager.StartTransaction())
+                {
+                    var blockTable = transaction.GetObject(document.Database.BlockTableId, OpenMode.ForRead) as BlockTable;
+                    var blockTableRecord = transaction.GetObject(blockTable[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+     
+                    blockTableRecord.AppendEntity(retaAB);
+                    transaction.AddNewlyCreatedDBObject(retaAB, true);
+     
+                    blockTableRecord.AppendEntity(retaAC);
+                    transaction.AddNewlyCreatedDBObject(retaAC, true);
+     
+                    blockTableRecord.AppendEntity(retaBD);
+                    transaction.AddNewlyCreatedDBObject(retaBD, true);
+     
+                    blockTableRecord.AppendEntity(retaCD);
+                    transaction.AddNewlyCreatedDBObject(retaCD, true);
+     
+                    transaction.Commit();
+     
+                    transaction.Commit();
+                }
+     
+                document.Editor.WriteMessage("Comando efetuado com sucesso.");
             }
- 
-            document.Editor.WriteMessage("Comando efetuado com sucesso.");
         }
     }
-}
 {% endhighlight %}
 
 
