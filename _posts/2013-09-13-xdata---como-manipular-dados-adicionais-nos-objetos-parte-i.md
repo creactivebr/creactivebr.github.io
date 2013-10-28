@@ -89,7 +89,6 @@ Depois, lemos o objeto do banco de dados no modo de leitura, e verificamos o XDa
 
 ![Fig. 2]({{ site_url }}/images/xdata---como-manipular-dados-adicionais-nos-objetos-parte-i-.img3.png)
 
-
 Como ainda não salvamos nenhum dado adicional, a linha de comando avisa que não há nenhum dado anexado à reta. Simples, não?
 
 No próximo post, iremos analisar como salvar o XData. Até breve, forte abraço e bom coding a todos!
