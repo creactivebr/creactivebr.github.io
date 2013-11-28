@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "XData   como manipular dados adicionais nos objetos? (Parte I)"
+title: "XData - como manipular dados adicionais nos objetos? (Parte I)"
 category: posts
 author: brunosaboia
 tags: [AutoCAD, XData]
