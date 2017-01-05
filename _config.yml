@@ -1,11 +1,9 @@
 timezone: America/Fortaleza
 host: 0.0.0.0
 port: 3000
-markdown: rdiscount
-pygments: true
+markdown: kramdown
+highlighter: rouge
 permalink: /posts/:title
-rdiscount:
-  extensions: [smart]
 title : Fala Creactive!
 production_url : http://blog.creactive.com.br
 description: "Blogga Please"
